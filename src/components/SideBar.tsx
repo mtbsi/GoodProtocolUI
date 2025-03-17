@@ -109,16 +109,16 @@ export default function SideBar({ mobile, closeSidebar }: { mobile?: boolean; cl
                 subMenuTitle: 'Regular',
                 items: [
                     {
-                        label: i18n._(t`Buy G$`),
-                        url: 'https://v2.app.squidrouter.com/',
-                        dataAttr: 'buygd_squid',
+                        label: i18n._(t`GoodCollective`),
+                        url: 'https://goodcollective.xyz/',
+                        dataAttr: 'goodcollective',
                         withIcon: true,
                         show: true,
                     },
                     {
-                        label: i18n._(t`Donate`),
-                        url: 'https://gooddollar.notion.site/Donate-to-a-G-Cause-e7d31fb67bb8494abb3a7989ebe6f181',
-                        dataAttr: 'donate',
+                        label: i18n._(t`Buy G$`),
+                        url: 'https://v2.app.squidrouter.com/',
+                        dataAttr: 'buygd_squid',
                         withIcon: true,
                         show: true,
                     },
@@ -175,7 +175,7 @@ export default function SideBar({ mobile, closeSidebar }: { mobile?: boolean; cl
                         show: true,
                     },
                     {
-                        label: i18n._(t`Docs`),
+                        label: i18n._(t`Help & Documentation`),
                         url: 'https://docs.gooddollar.org',
                         dataAttr: 'docs',
                         withIcon: true,
@@ -204,6 +204,11 @@ export default function SideBar({ mobile, closeSidebar }: { mobile?: boolean; cl
             {
                 route: '/claim',
                 text: 'Claim',
+                show: true,
+            },
+            {
+                route: '/news',
+                text: 'News',
                 show: true,
             },
             {
@@ -279,7 +284,7 @@ export default function SideBar({ mobile, closeSidebar }: { mobile?: boolean; cl
                                     key={subMenu.subMenuTitle}
                                     tabTitle={subMenu.subMenuTitle}
                                     viewInteraction={{
-                                        hover: { backgroundColor: 'primary:alpha.10', borderRadius: 6 },
+                                        hover: { backgroundColor: 'main:alpha.10', borderRadius: 6 },
                                     }}
                                     styles={{
                                         button: {

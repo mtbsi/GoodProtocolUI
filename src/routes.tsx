@@ -1,5 +1,8 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { usePostHog } from 'posthog-react-native'
+import { Spinner } from 'native-base'
+
 import { RedirectHashRoutes } from 'pages/routes/redirects'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { CustomLightSpinner } from 'theme'
@@ -10,9 +13,23 @@ const Swap = lazy(() => import('./pages/gd/Swap'))
 const Stakes = lazy(() => import('./pages/gd/Stake'))
 const Portfolio = lazy(() => import('./pages/gd/Portfolio'))
 const MicroBridge = lazy(() => import('./pages/gd/MicroBridge'))
-const Claim = lazy(() => import('./pages/gd/Claim'))
+const Claim = lazy(() => import('./pages/gd/Claim/'))
 const GoodId = lazy(() => import('./pages/gd/GoodId'))
 const BuyGd = lazy(() => import('./pages/gd/BuyGD'))
+const NewsFeedPage = lazy(() => import('./pages/gd/News'))
+
+const RoutesWrapper = () => {
+    const posthog = usePostHog()
+    const [posthogInitialized, setPosthogInitialized] = useState(false)
+
+    useEffect(() => {
+        if (posthog) {
+            posthog.onFeatureFlags(() => setPosthogInitialized(true))
+        }
+    }, [posthog])
+
+    return posthogInitialized ? <Routes /> : <Spinner variant="page-loader" size="lg" />
+}
 
 function Routes(): JSX.Element {
     const { chainId } = useActiveWeb3React()
@@ -28,10 +45,11 @@ function Routes(): JSX.Element {
                 <Route exact strict path="/buy" component={BuyGd} />
                 <Route exact strict path="/claim" component={Claim} />
                 <Route exact strict path="/microbridge" component={MicroBridge} />
+                <Route exact strict path="/news" component={NewsFeedPage} />
                 <Route component={RedirectHashRoutes} />
             </Switch>
         </Suspense>
     )
 }
 
-export default Routes
+export default RoutesWrapper
